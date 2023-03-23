@@ -2,7 +2,7 @@
 
 namespace Src\Domain\Users\Entities;
 
-interface Location{
+abstract class AbstractLocation{
 
 	public int $id;
 	public int $user_id;

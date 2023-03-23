@@ -2,15 +2,15 @@
 
 namespace Src\Domain\Users\Entities;
 
-use Src\Domain\User\Entities\Location;
+use Src\Domain\Users\Entities\AbstractLocation;
 
-abstract class User {
+abstract class AbstractUser {
 
 	public int $id;
 	public string $name;
 	public string $email;
 	public ?string $image;
 	public ?string $description;
-	public Location $location;
+	public AbstractLocation $location;
 
 }
