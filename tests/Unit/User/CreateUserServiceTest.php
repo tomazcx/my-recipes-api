@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Hash;
-use Src\Domain\Users\Entities\User;
 use PHPUnit\Framework\TestCase;
 use Src\Domain\Users\Entities\AbstractUser;
 use Src\Domain\Users\Repositories\AbstractUserRepository;

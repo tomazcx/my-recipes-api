@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Src\Domain\Auth\Services\AbstractAuthenticate;
 use Src\Domain\Users\Repositories\AbstractUserRepository;
 use Src\Domain\Users\Services\AbstractCreateUser;
 use Src\Domain\Users\Services\AbstractShowUser;
+use Src\Implementation\Auth\Services\AuthenticateService;
 use Src\Implementation\Users\Repositories\UserRepository;
 use Src\Implementation\Users\Services\CreateUserService;
 use Src\Implementation\Users\Services\ShowUserService;
@@ -17,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+	    $this->app->bind(
+		    AbstractAuthenticate::class,
+		    AuthenticateService::class
+	    );
+
 	    $this->app->bind(
 		    AbstractCreateUser::class,
 		    CreateUserService::class

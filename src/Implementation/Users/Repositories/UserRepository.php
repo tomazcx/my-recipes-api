@@ -60,10 +60,12 @@ class UserRepository extends AbstractUserRepository{
 			'user_id' => $user['id']		
 		]);
 
-		$user->location()->associate($location);
-		$user->save();
+		$location->user()->associate($user);
+		$location->save();
 
 		$user['location'] = [
+			'id' => $location->id,
+			'user_id' => $location->user_id,
 			'city' => $location->city,
 			'state' => $location->state,
 			'country' => $location->country

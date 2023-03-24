@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\ShowUserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 Route::prefix('user')->name('user.')->group(function(){
+	Route::post('/', [CreateUserController::class, 'handle'])->name('create');
+	Route::get('/{id}', [ShowUserController::class, 'handle'])->name('show');
 
-	Route::get('/{id}', ShowUserController::class)->name('show');
-	Route::post('/create', CreateUserController::class)->name('create');
+	Route::group(['middleware' => 'jwt'], function(){
+	});
+});
 
+Route::prefix('auth')->name('auth.')->group(function(){
+	Route::post('/login', [AuthenticateController::class, 'handle'])->name('login');
 });
 
 

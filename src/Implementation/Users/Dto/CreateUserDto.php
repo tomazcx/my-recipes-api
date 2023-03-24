@@ -12,9 +12,9 @@ class CreateUserDto extends AbstractCreateUserDto {
 		$this->email = $data['email'];
 		$this->password = $data['password'];
 		$this->confirmPassword = $data['confirmPassword'];
-		$this->description = $data['description'];
-		$this->city = $data['city'];
-		$this->state = $data['state'];
+		$this->description = $data['description']?? null;
+		$this->city = $data['city']?? null;
+		$this->state = $data['state']?? null;
 		$this->country = $data['country'];
 	}
 

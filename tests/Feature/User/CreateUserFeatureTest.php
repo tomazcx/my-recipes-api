@@ -12,10 +12,9 @@ class CreateUserFeatureTest extends TestCase
 
 	use RefreshDatabase;
 
-
     	public function test_it_should_create_a_user(): void
 	{
-	    $response = $this->post('api/user/create', [
+	    $response = $this->post('api/user', [
 				'name' => 'test-name',
 				'email' => 'test@gmail.com',
 				'password' => '123',
@@ -42,7 +41,7 @@ class CreateUserFeatureTest extends TestCase
 
 	public function test_it_should_fail_due_to_different_passwords():void
 	{
-		$response = $this->post('api/user/create', [
+		$response = $this->post('api/user', [
 				'name' => 'test-name',
 				'email' => 'test@gmail.com',
 				'password' => '123',
@@ -71,7 +70,7 @@ class CreateUserFeatureTest extends TestCase
 			'email' => 'registered@email.com'
 		]);
 
-		$response = $this->post('api/user/create', [
+		$response = $this->post('api/user', [
 				'name' => 'test-name',
 				'email' => 'registered@email.com',
 				'password' => '123',
@@ -84,6 +83,16 @@ class CreateUserFeatureTest extends TestCase
 		]);
 
 		$response->assertStatus(401);
+
+	}
+
+	public function test_it_should_fail_due_to_not_passing_on_form_validation():void{
+		//lack of obrigatory fields
+		$response = $this->post('/api/auth/login', [
+			'email' => 'wrong-email-format'	
+		]);
+
+		$response->assertStatus(422);
 
 	}
 }

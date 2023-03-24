@@ -18,12 +18,12 @@ class CreateUserController extends Controller
 		$this->service = $service;	
 	}
 
-	public function __invoke(CreateUserRequest $request)
+	public function handle(CreateUserRequest $request)
 	{
 		$dto = new CreateUserDto($request->validated());
 		$user = $this->service->execute($dto);	
 
-		return response()->json(['user' => json_encode($user)], 201);
+		return response()->json($user, 201);
 	}
    
 }

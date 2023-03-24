@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Src\Implementation\Common\Error\InvalidCredentialsError;
 use Src\Implementation\Common\Error\NotFoundError;
+use Src\Implementation\Common\Error\UnauthorizedError;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -54,7 +55,7 @@ class Handler extends ExceptionHandler
 		return response()->json(['error' => $exception->message], 404);
 	    }
 
-	    if($exception instanceof InvalidCredentialsError){
+	    if($exception instanceof InvalidCredentialsError || $exception instanceof UnauthorizedError){
 		return response()->json(['error' => $exception->message], 401);
 	    }
 

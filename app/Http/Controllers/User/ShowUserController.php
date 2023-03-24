@@ -14,7 +14,7 @@ class ShowUserController extends Controller
 		$this->service = $service;	
 	}
 
-	public function __invoke($id)
+	public function handle($id)
 	{
 		$user = $this->service->execute($id);	
 
