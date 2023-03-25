@@ -5,6 +5,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\File;
 
 class UpdateImageRequest extends FormRequest
 {
@@ -24,8 +25,11 @@ class UpdateImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-		"image" => "required|file|mimetype:image/jpg,image/jpeg,image/png|image:jpeg,jpg,png"
-        ];
+		"image" => [
+			'required',
+			File::image()
+		]
+	];
     }
 
     protected function failedValidation(Validator $validator)

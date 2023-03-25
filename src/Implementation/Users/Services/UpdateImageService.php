@@ -2,6 +2,7 @@
 
 namespace Src\Implementation\Users\Services;
 
+use Illuminate\Support\Facades\Storage;
 use Src\Domain\Users\Entities\AbstractUser;
 use Src\Domain\Users\Repositories\AbstractUserRepository;
 use Src\Domain\Users\Services\AbstractUpdateImage;
@@ -23,6 +24,12 @@ class UpdateImageService extends AbstractUpdateImage{
 
 		if(!$userExists){
 			throw new NotFoundError('Usuário não encontrado');
+		}
+
+		$userData = $this->userRepository->show($id);
+
+		if($userData->image != null){
+			Storage::delete($userData->image);
 		}
 
 		$user = $this->userRepository->updateImage($image, $id);
