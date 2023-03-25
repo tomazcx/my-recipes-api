@@ -2,7 +2,7 @@
 
 namespace Src\Domain\Users\Dto;
 
-interface UpdateUserDto{
+abstract class AbstractUpdateUserDto{
 
 	public ?string $name;
 	public ?string $email;

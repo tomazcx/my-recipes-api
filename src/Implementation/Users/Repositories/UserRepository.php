@@ -6,10 +6,11 @@ namespace Src\Implementation\Users\Repositories;
 use App\Models\Location as LocationModel;
 use App\Models\User as UserModel;
 use Src\Domain\Users\Dto\AbstractCreateUserDto;
-use Src\Domain\Users\Dto\UpdateLocationDto;
-use Src\Domain\Users\Dto\UpdateUserDto;
+use Src\Domain\Users\Dto\AbstractUpdateLocationDto;
+use Src\Domain\Users\Dto\AbstractUpdateUserDto;
 use Src\Domain\Users\Entities\AbstractUser;
 use Src\Domain\Users\Repositories\AbstractUserRepository;
+use Src\Implementation\Users\Entities\Location;
 use Src\Implementation\Users\Entities\User;
 
 class UserRepository extends AbstractUserRepository{
@@ -76,11 +77,19 @@ class UserRepository extends AbstractUserRepository{
 		return $userObj;
 	}
 
-	public function update(UpdateUserDto $updateUserDto, int $id): AbstractUser
+	public function update(AbstractUpdateUserDto $updateUserDto, int $id): AbstractUser
 	{
 		$user = $this->userModel::find($id);
-		$user->update($updateUserDto);
-		return $user;
+
+		$user->update([
+			'name' => $updateUserDto->name?? $user['name'],
+			'email' => $updateUserDto->email?? $user['email'],
+			'description' => $updateUserDto->description
+		]);
+
+		$userObj = new User($user);
+
+		return $userObj;
 	}
 
 	public function updateImage(string $image, int $id): AbstractUser
@@ -89,20 +98,33 @@ class UserRepository extends AbstractUserRepository{
 		$user->update([
 			"image"=> $image
 		]);
-		return $user;
+
+		$userObj = new User($user);
+		return $userObj;
 	}
 
-	public function updateLocation(UpdateLocationDto $updateLocationDto, int $id): AbstractUser
+	public function updateLocation(AbstractUpdateLocationDto $updateLocationDto, int $id): AbstractUser
 	{	
-		$user = $this->userModel::find($id);
-		$user->location()::update($updateLocationDto);
-		return $user;
+		$location = $this->locationModel::where('user_id', $id)->first();
+
+		$location->update([
+			'city' => $updateLocationDto->city?? $location['city'],
+			'state' => $updateLocationDto->state?? $location['state'],
+			'country' => $updateLocationDto->country?? $location['country']
+		]);
+
+		$user = $this->userModel::with('location')->find($id);
+
+		$userObj = new User($user);
+
+		return $userObj;
 	}
 
 	public function delete(int $id): void
 	{
 		$this->userModel::destroy($id);
 	}
+	
 	
 
 }

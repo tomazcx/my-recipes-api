@@ -2,7 +2,7 @@
 
 namespace Src\Domain\Users\Dto;
 
-interface UpdateLocationDto{
+abstract class AbstractUpdateLocationDto{
 
 	public ?string $city;
 	public ?string $state;

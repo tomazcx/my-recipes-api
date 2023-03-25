@@ -13,7 +13,10 @@ class User extends AbstractUser{
 		$this->email = $data['email'];
 		$this->description = $data['description'];
 		$this->image = $data['image'];
-		$this->location = new Location($data['location']);
+
+		if(isset($data['location'])){
+			$this->location = new Location($data['location']);
+		}
 	}
 
 }
