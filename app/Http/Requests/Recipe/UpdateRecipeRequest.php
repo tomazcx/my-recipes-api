@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests\Recipe;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules\File;
 
-class UpdateRecipeImageRequest extends FormRequest
+class UpdateRecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,15 @@ class UpdateRecipeImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-		"image"  => [
-			'required',
-			File::image()
-		]
-	];
+            	'name' => 'string',
+		'timeToPrepare' => 'string',
+		'portions' => 'integer',
+		'difficulty' => 'integer',
+		'ingredients' => 'string',
+		'stepsToPrepare' => 'string',
+        ];
     }
 
-	
     protected function failedValidation(Validator $validator)
     {
     	throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));

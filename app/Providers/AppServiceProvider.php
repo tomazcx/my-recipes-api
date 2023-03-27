@@ -8,6 +8,9 @@ use Src\Domain\Recipes\Repositories\AbstractRecipeRepository;
 use Src\Domain\Recipes\Services\AbstractCreateRecipe;
 use Src\Domain\Recipes\Services\AbstractDeleteRecipe;
 use Src\Domain\Recipes\Services\AbstractShowRecipe;
+use Src\Domain\Recipes\Services\AbstractShowRecipes;
+use Src\Domain\Recipes\Services\AbstractUpdateRecipe;
+use Src\Domain\Recipes\Services\AbstractUpdateRecipeImage;
 use Src\Domain\Users\Repositories\AbstractUserRepository;
 use Src\Domain\Users\Services\AbstractCreateUser;
 use Src\Domain\Users\Services\AbstractDeleteUser;
@@ -20,6 +23,9 @@ use Src\Implementation\Recipes\Repositories\RecipeRepository;
 use Src\Implementation\Recipes\Services\CreateRecipeService;
 use Src\Implementation\Recipes\Services\ShowRecipeService;
 use Src\Implementation\Recipes\Services\DeleteRecipeService;
+use Src\Implementation\Recipes\Services\ShowRecipesService;
+use Src\Implementation\Recipes\Services\UpdateRecipeImageService;
+use Src\Implementation\Recipes\Services\UpdateRecipeService;
 use Src\Implementation\Users\Repositories\UserRepository;
 use Src\Implementation\Users\Services\CreateUserService;
 use Src\Implementation\Users\Services\DeleteUserService;
@@ -96,6 +102,21 @@ class AppServiceProvider extends ServiceProvider
 	    $this->app->bind(
 		    AbstractDeleteRecipe::class,
 		    DeleteRecipeService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractUpdateRecipeImage::class,
+		    UpdateRecipeImageService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractShowRecipes::class,
+		    ShowRecipesService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractUpdateRecipe::class,
+		    UpdateRecipeService::class
 	    );
     }
 

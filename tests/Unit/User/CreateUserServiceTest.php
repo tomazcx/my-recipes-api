@@ -15,10 +15,11 @@ class TestUser extends AbstractUser{}
 
 class CreateUserServiceTest extends TestCase
 {
+	
 	protected AbstractCreateUser $service;	
 
-	public function test_it_should_create_a_new_user(): void
-	{
+	public function test_it_should_create_a_new_user(): void{
+
 		$user = new TestUser();
 
 		$user->id = 1;

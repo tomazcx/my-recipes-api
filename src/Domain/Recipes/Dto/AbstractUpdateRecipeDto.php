@@ -10,7 +10,5 @@ abstract class AbstractUpdateRecipeDto{
 	public ?int $difficulty;
 	public ?string $ingredients;
 	public ?string $stepsToPrepare;
-	public ?int $authorId;
-	public ?array $categories;
 
 }

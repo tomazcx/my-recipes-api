@@ -4,6 +4,9 @@ use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Recipe\CreateRecipeController;
 use App\Http\Controllers\Recipe\DeleteRecipeController;
 use App\Http\Controllers\Recipe\ShowRecipeController;
+use App\Http\Controllers\Recipe\ShowRecipesController;
+use App\Http\Controllers\Recipe\UpdateRecipeController;
+use App\Http\Controllers\Recipe\UpdateRecipeImageController;
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\ShowUserController;
@@ -37,11 +40,14 @@ Route::prefix('user')->name('user.')->group(function(){
 
 Route::prefix('recipe')->name('recipe.')->group(function (){
 
+	Route::get('/', [ShowRecipesController::class, 'handle'])->name('all');
 	Route::get('/{id}', [ShowRecipeController::class, 'handle'])->name('show');
 
 	Route::group(['middleware' => 'jwt'], function(){
 		Route::post('/', [CreateRecipeController::class, 'handle'])->name('create');
 		Route::delete('/{id}', [DeleteRecipeController::class, 'handle'])->name('delete');
+		Route::patch('/image/{id}', [UpdateRecipeImageController::class, 'handle'])->name('updateImage');
+		Route::put('/{id}', [UpdateRecipeController::class, 'handle'])->name('update');
 	});
 
 });

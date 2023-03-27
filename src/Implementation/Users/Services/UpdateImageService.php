@@ -23,6 +23,7 @@ class UpdateImageService extends AbstractUpdateImage{
 		$userExists = $this->userRepository->exists($id);
 
 		if(!$userExists){
+			Storage::delete($image);
 			throw new NotFoundError('Usuário não encontrado');
 		}
 

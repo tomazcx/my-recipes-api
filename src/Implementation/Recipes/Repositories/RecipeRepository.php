@@ -27,6 +27,12 @@ class RecipeRepository extends AbstractRecipeRepository{
 		return !!$recipe;
 	}
 
+	public function all(): array
+	{
+		$recipes = $this->recipesModel::with('user', 'categories')->get();
+		return $recipes->toArray();
+	}
+
 	public function show(int $id): AbstractRecipe
 	{
 		$recipe = $this->recipesModel::with('user', 'categories')->find($id);
@@ -58,24 +64,33 @@ class RecipeRepository extends AbstractRecipeRepository{
 
 	public function showRecipesByName(string $name): array
 	{
-		$recipes = $this->recipesModel::where('name', 'LIKE', '%' . $name . '%')->with('categories', 'users')->get();
-		return $recipes;
+		$recipes = $this->recipesModel::where('name', 'LIKE', '%' . $name . '%')->with('user', 'categories')->get();
+		return $recipes->toArray();
 	}
 
 	public function showRecipesByCategory(int $cateogoryId): array
 	{
 		$recipes = $this->recipesModel::whereHas('categories', function ($query) use ($cateogoryId) {
-			$query->find($cateogoryId);
-		});	
+			$query->where('id', $cateogoryId);
+		})->get();	
 
-		return $recipes;
+		return $recipes->toArray();
+	}
+
+	public function showRecipesByCategoryAndName(string $name, int $categoryId): array
+	{
+		$recipes = $this->recipesModel::where('name', 'LIKE', '%' . $name . '%')->whereHas('categories', function ($query) use ($categoryId) {
+			$query->where('id', $categoryId);
+		})->with('user', 'categories')->get();
+
+		return $recipes->toArray();
 	}
 
 	public function update(AbstractUpdateRecipeDto $updateRecipeDto, int $id): AbstractRecipe
 	{
 		$recipe = $this->recipesModel::find($id);
 
-		$updatedRecipe = $recipe::update([
+		$recipe->update([
 			'name' => $updateRecipeDto->name?? $recipe['name'],	
 			'timeToPrepare' => $updateRecipeDto->timeToPrepare?? $recipe['timeToPrepare'],
 			'portions' => $updateRecipeDto->portions?? $recipe['portions'],
@@ -84,7 +99,7 @@ class RecipeRepository extends AbstractRecipeRepository{
 			'stepsToPrepare' => $updateRecipeDto->stepsToPrepare?? $recipe['stepsToPrepare']
 		]);
 	
-		$recipeObj = new Recipe($updatedRecipe);
+		$recipeObj = new Recipe($recipe);
 
 		return $recipeObj;
 	}	
@@ -93,10 +108,11 @@ class RecipeRepository extends AbstractRecipeRepository{
 	{
 		$recipe = $this->recipesModel::find($id);
 
-		$updatedRecipe = $recipe::update([
+		$recipe->update([
 			'image' => $image
 		]);
-		$recipeObj = new Recipe($updatedRecipe);
+
+		$recipeObj = new Recipe($recipe);
 		
 		return $recipeObj;
 	}

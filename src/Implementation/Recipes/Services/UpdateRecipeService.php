@@ -2,14 +2,14 @@
 
 namespace Src\Implementation\Recipes\Services;
 
-use Illuminate\Support\Facades\Storage;
+use Src\Domain\Recipes\Dto\AbstractUpdateRecipeDto;
 use Src\Domain\Recipes\Entities\AbstractRecipe;
 use Src\Domain\Recipes\Repositories\AbstractRecipeRepository;
-use Src\Domain\Recipes\Services\AbstractUpdateRecipeImage;
+use Src\Domain\Recipes\Services\AbstractUpdateRecipe;
 use Src\Implementation\Common\Error\ForbiddenError;
 use Src\Implementation\Common\Error\NotFoundError;
 
-class UpdateRecipeImageService extends AbstractUpdateRecipeImage{
+class UpdateRecipeService extends AbstractUpdateRecipe{
 
 	protected AbstractRecipeRepository $recipeRepository;
 
@@ -18,27 +18,23 @@ class UpdateRecipeImageService extends AbstractUpdateRecipeImage{
 		$this->recipeRepository = $recipeRepository;	
 	}
 
-	public function execute(string $image, int $recipeId, int $userId): AbstractRecipe
+	public function execute(AbstractUpdateRecipeDto $updateRecipeDto, int $recipeId, int $userId): AbstractRecipe
 	{
 		$recipeExists = $this->recipeRepository->exists($recipeId);
 
 		if(!$recipeExists){
-			Storage::delete($image);
-			Throw new NotFoundError('Receita não encontrada');
+			throw new NotFoundError('Receita não encontrada');
 		}
 
 		$recipe = $this->recipeRepository->show($recipeId);
 
 		if($recipe->author->id != $userId){
-			Storage::delete($image);
-			Throw new ForbiddenError('Você não possui permissão para realizar essa ação');
+			throw new ForbiddenError('Você não possui permissão para realizar essa ação.');
 		}
 
-		Storage::delete($recipe->image);
+		$updatedRecipe = $this->recipeRepository->update($updateRecipeDto, $recipeId);
 
-		$newRecipe = $this->recipeRepository->updateImage($image, $recipeId);
-
-		return $newRecipe;
+		return $updatedRecipe;
 	}
 
 }
