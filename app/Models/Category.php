@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    public function recipes()
-    {
+	protected $fillable = [
+		'category'
+	];
+
+    	public function recipes()
+       	{
 	    return $this->belongsToMany(Recipe::class);
-    }
+    	}
 }

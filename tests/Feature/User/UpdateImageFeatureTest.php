@@ -55,7 +55,6 @@ class UpdateImageFeatureTest extends TestCase{
 			'image' => 'users/'.$image->hashName()
 		]);
 
-
 		$this->assertTrue(Storage::disk('public')->exists('users/' . $image->hashName()));
 		Storage::disk('public')->delete('users/' . $image->hashName());
 	}

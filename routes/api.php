@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticateController;
+use App\Http\Controllers\Recipe\CreateRecipeController;
+use App\Http\Controllers\Recipe\DeleteRecipeController;
+use App\Http\Controllers\Recipe\ShowRecipeController;
 use App\Http\Controllers\User\CreateUserController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\ShowUserController;
@@ -30,6 +33,17 @@ Route::prefix('user')->name('user.')->group(function(){
 		Route::patch('/image', [UpdateImageController::class, 'handle'])->name('updateImage');
 		Route::delete('/', [DeleteUserController::class, 'handle'])->name('delete');
 	});
+});
+
+Route::prefix('recipe')->name('recipe.')->group(function (){
+
+	Route::get('/{id}', [ShowRecipeController::class, 'handle'])->name('show');
+
+	Route::group(['middleware' => 'jwt'], function(){
+		Route::post('/', [CreateRecipeController::class, 'handle'])->name('create');
+		Route::delete('/{id}', [DeleteRecipeController::class, 'handle'])->name('delete');
+	});
+
 });
 
 Route::prefix('auth')->name('auth.')->group(function(){

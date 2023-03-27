@@ -12,7 +12,7 @@ abstract class AbstractRecipeRepository{
 	abstract function show(int $id):AbstractRecipe;
 	abstract function showRecipesByCategory(int $cateogoryId):array;
 	abstract function showRecipesByName(string $name):array;
-	abstract function create(AbstractCreateRecipeDto $createRecipeDto):AbstractRecipe;
+	abstract function create(AbstractCreateRecipeDto $createRecipeDto, int $userId):AbstractRecipe;
 	abstract function update(AbstractUpdateRecipeDto $updateRecipeDto, int $id):AbstractRecipe;
 	abstract function updateImage(string $image, int $id):AbstractRecipe;
 	abstract function delete(int $id):void;

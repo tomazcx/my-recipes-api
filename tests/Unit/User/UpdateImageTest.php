@@ -56,6 +56,7 @@ class UpdateImageTest extends TestCase{
 	public function test_it_should_delete_the_image_if_defined():void
 	{
 		Storage::disk('public')->put('tests/example.txt', 'content-example');
+		$this->assertTrue(Storage::disk('public')->exists('tests/example.txt'));
 
 		$userData = new TestUser();
 		$userData->name = 'test-name';

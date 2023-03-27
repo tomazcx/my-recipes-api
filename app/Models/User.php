@@ -49,6 +49,10 @@ class User extends Authenticatable implements JWTSubject
 	    return $this->hasOne(Location::class);
     }
 
+    public function recipes(){
+	    return $this->hasMany(Recipe::class);
+    }
+
 
     use Notifiable;
 
