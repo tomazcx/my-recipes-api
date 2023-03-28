@@ -7,6 +7,8 @@ use Src\Domain\Auth\Services\AbstractAuthenticate;
 use Src\Domain\Comments\Repositories\AbstractCommentRepository;
 use Src\Domain\Comments\Services\AbstractCreateComment;
 use Src\Domain\Comments\Services\AbstractDeleteComment;
+use Src\Domain\Comments\Services\AbstractShowComment;
+use Src\Domain\Comments\Services\AbstractShowRecipeComments;
 use Src\Domain\Recipes\Repositories\AbstractRecipeRepository;
 use Src\Domain\Recipes\Services\AbstractCreateRecipe;
 use Src\Domain\Recipes\Services\AbstractDeleteRecipe;
@@ -25,6 +27,8 @@ use Src\Implementation\Auth\Services\AuthenticateService;
 use Src\Implementation\Comments\Repositories\CommentRepository;
 use Src\Implementation\Comments\Services\CreateCommentService;
 use Src\Implementation\Comments\Services\DeleteCommentService;
+use Src\Implementation\Comments\Services\ShowCommentService;
+use Src\Implementation\Comments\Services\ShowRecipeCommentsService;
 use Src\Implementation\Recipes\Repositories\RecipeRepository;
 use Src\Implementation\Recipes\Services\CreateRecipeService;
 use Src\Implementation\Recipes\Services\ShowRecipeService;
@@ -139,6 +143,16 @@ class AppServiceProvider extends ServiceProvider
 	    $this->app->bind(
 		    AbstractDeleteComment::class,
 		    DeleteCommentService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractShowComment::class,
+		    ShowCommentService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractShowRecipeComments::class,
+		    ShowRecipeCommentsService::class
 	    );
     }
 

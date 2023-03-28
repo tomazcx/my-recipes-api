@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Comment\CreateCommentController;
 use App\Http\Controllers\Comment\DeleteCommentController;
+use App\Http\Controllers\Comment\ShowCommentController;
+use App\Http\Controllers\Comment\ShowRecipeCommentsController;
 use App\Http\Controllers\Recipe\CreateRecipeController;
 use App\Http\Controllers\Recipe\DeleteRecipeController;
 use App\Http\Controllers\Recipe\ShowRecipeController;
@@ -55,6 +57,9 @@ Route::prefix('recipe')->name('recipe.')->group(function (){
 });
 
 Route::prefix('comment')->name('comment.')->group(function() {
+
+	Route::get('/{id}', [ShowCommentController::class, 'handle'])->name('show');
+	Route::get('/recipe/{id}', [ShowRecipeCommentsController::class, 'handle'])->name('showRecipeComments');
 
 	Route::group(['middleware' => 'jwt'], function(){
 		Route::post('/{recipeId}', [CreateCommentController::class, 'handle'])->name('create');
