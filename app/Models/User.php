@@ -53,6 +53,12 @@ class User extends Authenticatable implements JWTSubject
 	    return $this->hasMany(Recipe::class);
     }
 
+    public function comments() 
+    {
+		return $this->hasMany(Comment::class);
+    }
+
+
 
     use Notifiable;
 

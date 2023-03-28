@@ -25,6 +25,11 @@ class Recipe extends Model
 		return $this->belongsToMany(Category::class);
 	}
 
+	public function comments()
+	{
+		return $this->hasMany(Comment::class);
+	}
+
 	public function user()
 	{
 		return $this->belongsTo(User::class);

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticateController;
+use App\Http\Controllers\Comment\CreateCommentController;
+use App\Http\Controllers\Comment\DeleteCommentController;
 use App\Http\Controllers\Recipe\CreateRecipeController;
 use App\Http\Controllers\Recipe\DeleteRecipeController;
 use App\Http\Controllers\Recipe\ShowRecipeController;
@@ -48,6 +50,15 @@ Route::prefix('recipe')->name('recipe.')->group(function (){
 		Route::delete('/{id}', [DeleteRecipeController::class, 'handle'])->name('delete');
 		Route::patch('/image/{id}', [UpdateRecipeImageController::class, 'handle'])->name('updateImage');
 		Route::put('/{id}', [UpdateRecipeController::class, 'handle'])->name('update');
+	});
+
+});
+
+Route::prefix('comment')->name('comment.')->group(function() {
+
+	Route::group(['middleware' => 'jwt'], function(){
+		Route::post('/{recipeId}', [CreateCommentController::class, 'handle'])->name('create');
+		Route::delete('/{id}', [DeleteCommentController::class, 'handle'])->name('delete');
 	});
 
 });

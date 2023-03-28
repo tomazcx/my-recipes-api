@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Src\Domain\Auth\Services\AbstractAuthenticate;
+use Src\Domain\Comments\Repositories\AbstractCommentRepository;
+use Src\Domain\Comments\Services\AbstractCreateComment;
+use Src\Domain\Comments\Services\AbstractDeleteComment;
 use Src\Domain\Recipes\Repositories\AbstractRecipeRepository;
 use Src\Domain\Recipes\Services\AbstractCreateRecipe;
 use Src\Domain\Recipes\Services\AbstractDeleteRecipe;
@@ -19,6 +22,9 @@ use Src\Domain\Users\Services\AbstractUpdateImage;
 use Src\Domain\Users\Services\AbstractUpdateLocation;
 use Src\Domain\Users\Services\AbstractUpdateUser;
 use Src\Implementation\Auth\Services\AuthenticateService;
+use Src\Implementation\Comments\Repositories\CommentRepository;
+use Src\Implementation\Comments\Services\CreateCommentService;
+use Src\Implementation\Comments\Services\DeleteCommentService;
 use Src\Implementation\Recipes\Repositories\RecipeRepository;
 use Src\Implementation\Recipes\Services\CreateRecipeService;
 use Src\Implementation\Recipes\Services\ShowRecipeService;
@@ -117,6 +123,22 @@ class AppServiceProvider extends ServiceProvider
 	    $this->app->bind(
 		    AbstractUpdateRecipe::class,
 		    UpdateRecipeService::class
+	    );
+
+	    //COMMENT BINDS
+	    $this->app->bind(
+		    AbstractCommentRepository::class,
+		    CommentRepository::class
+	    );
+
+	    $this->app->bind(
+		    AbstractCreateComment::class,
+		    CreateCommentService::class
+	    );
+
+	    $this->app->bind(
+		    AbstractDeleteComment::class,
+		    DeleteCommentService::class
 	    );
     }
 
